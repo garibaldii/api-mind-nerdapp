@@ -24,6 +24,8 @@ export const login = async (email: string, password: string) => {
         )
     }
 
+    console.log(process.env.JWT_SECRET_KEY)
+
     const token = jwt.sign(
         { id: user.id },
         process.env.JWT_SECRET_KEY!,
@@ -44,6 +46,13 @@ export const signUp = async (name: string, email: string, password: string) => {
             400
         )
     }
+
+    if (!name || !email || !password) {
+        throw new HttpError(
+            `Todos os campos são obrigatórios`,
+            400
+        )
+    }
     console.log(password)
 
     const hash = await bcrypt.hash(password, 10)
@@ -52,6 +61,5 @@ export const signUp = async (name: string, email: string, password: string) => {
 
     const user = new User(name, email, hash)
     return await UserRepository.postUser(user)
-
 }
 
