@@ -6,7 +6,9 @@ import { IUser } from "../interfaces/IUser";
 const userRepository = AppDataSource.getRepository(User);
 
 const getUsers = (): Promise<User[]> => {
-    return userRepository.find();
+    return userRepository.find({
+        relations: ["articles"]
+    });
 }
 
 const postUser = async (user: IUser): Promise<User> => {
@@ -16,12 +18,14 @@ const postUser = async (user: IUser): Promise<User> => {
 const getUserByEmail = async (email: string): Promise<User> => {
     return userRepository.findOne({
         where: { email },
+        relations: ["articles"]
     })
 }
 
 const getUserById = async (id: number): Promise<User> => {
     return userRepository.findOne({
-        where: { id }
+        where: { id },
+        relations: ["articles"]
     })
 }
 

@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import UserRepository from '../repositories/UserRepository';
-import { login, signUp } from '../../service/AuthService';
+import { login, signUp } from '../service/AuthService';
 
 const userRouter = Router();
 
