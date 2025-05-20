@@ -4,7 +4,7 @@ import User from "./User"
 
 
 @Entity()
-export class Article {
+class Article {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -30,3 +30,5 @@ export class Article {
 
 
 }
+
+export default Article
