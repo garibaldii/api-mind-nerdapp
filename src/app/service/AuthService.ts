@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { HttpError } from '../utils/HttpError';
-import User from '../app/entity/User';
-import UserRepository from '../app/repositories/UserRepository';
+import { HttpError } from '../../utils/HttpError';
+import User from '../entity/User';
+import UserRepository from '../repositories/UserRepository';
 
 export const login = async (email: string, password: string) => {
 
