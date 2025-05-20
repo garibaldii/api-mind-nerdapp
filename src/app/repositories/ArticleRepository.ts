@@ -12,14 +12,13 @@ const postArticle = (article: Article): Promise<Article> => {
     return ArticleRepository.save(article)
 }
 
-const updateArticle = async (article: Article, data: Partial<Article>): Promise<Article | null> => {
-
+const updateArticle = async (article: Article, newData: Partial<Article>): Promise<Article | null> => {
 
     // Mescla os novos dados no artigo
-    ArticleRepository.merge(article, data);
+    let updatedArticle = ArticleRepository.merge(article, newData);
 
     // Salva o artigo atualizado
-    const updatedArticle = await ArticleRepository.save(article);
+     updatedArticle = await ArticleRepository.save(article);
 
     return updatedArticle;
 }
