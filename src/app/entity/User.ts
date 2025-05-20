@@ -1,32 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
-import { Article } from "./Article"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import Article from "./Article";
 
 @Entity("users")
 class User {
-
     @PrimaryGeneratedColumn('increment')
-    id: number
+    id: number;
 
     @Column('varchar', { length: 100, nullable: false })
-    name: string
+    name: string;
 
     @Column('varchar', { length: 100, nullable: false })
-    email: string
+    email: string;
 
     @Column('varchar', { length: 100, nullable: false })
-    password: string
+    password: string;
 
-    @Column()
-    articles?: Article[]
-
+    @OneToMany(() => Article, (article) => article.author)
+    articles?: Article[];
 
     constructor(name: string, email: string, password: string, articles?: Article[]) {
-        this.name = name
-        this.email = email
-        this.password = password
-        this.articles = articles
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.articles = articles;
     }
 }
 
-
-export default User
+export default User;

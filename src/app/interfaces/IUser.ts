@@ -1,4 +1,4 @@
-import { Article } from "../entity/Article"
+import Article from "../entity/Article"
 
 export interface IUser {
     id?: number,
