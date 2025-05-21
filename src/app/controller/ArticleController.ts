@@ -14,7 +14,7 @@ const articleRouter = Router();
 articleRouter.get("/", async (req, res, next) => {
   try {
     const articles = await getArticlesService();
-    res.status(200).send({ articles });
+    res.status(200).send( articles );
   } catch (error) {
     next(error);
   }
@@ -27,7 +27,7 @@ articleRouter.post("/", upload.single("image"), async (req, res, next) => {
     const image = req.file?.buffer
 
     const article = await saveArticleService(title, content, Number(authorId), image);
-    res.status(201).send({ article });
+    res.status(201).send( article );
   } catch (error) {
     next(error);
   }
@@ -44,7 +44,7 @@ articleRouter.put("/:id", upload.single("image"),async (req, res, next) => {
 
     const article = await updateArticleService(id, data);
 
-    res.status(200).send({ article });
+    res.status(200).send( article );
   } catch (error) {
     next(error);
   }
