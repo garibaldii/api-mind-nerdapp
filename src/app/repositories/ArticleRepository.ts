@@ -5,7 +5,9 @@ import { IArticle } from "../interfaces/IArticle";
 const ArticleRepository = AppDataSource.getRepository(Article)
 
 const getArticles = (): Promise<Article[]> => {
-    return ArticleRepository.find()
+    return ArticleRepository.find({
+        relations: ["author"]
+    })
 }
 
 const postArticle = (article: Article): Promise<Article> => {
