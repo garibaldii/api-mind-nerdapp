@@ -15,6 +15,15 @@ const postUser = async (user: IUser): Promise<User> => {
     return userRepository.save(user);
 }
 
+const putUser = async (user: User, newData: Partial<IUser>): Promise<User> => {
+    let updatedUser = userRepository.merge(user, newData)
+
+    updatedUser = await userRepository.save(updatedUser)
+
+    return updatedUser
+}
+
+
 const getUserByEmail = async (email: string): Promise<User> => {
     return userRepository.findOne({
         where: { email },
@@ -29,4 +38,4 @@ const getUserById = async (id: number): Promise<User> => {
     })
 }
 
-export default { getUsers, postUser, getUserByEmail, getUserById };
+export default { getUsers, postUser, putUser, getUserByEmail, getUserById };
