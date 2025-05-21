@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import {
     deleteArticleService,
+  getArticleByIdService,
   getArticlesService,
   saveArticleService,
   updateArticleService,
@@ -60,6 +61,17 @@ articleRouter.delete("/:id", async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+
+articleRouter.get("/:id", async (req, res, next) => {
+  try {
+    const id = Number(req.params.id)
+    const article = await getArticleByIdService(id)
+
+    res.status(200).send(article)
+  } catch (error) {
+    next(error)
+  }
 })
 
 export default articleRouter;

@@ -29,7 +29,8 @@ const deleteArticle = (id: number) => { return ArticleRepository.delete(id) }
 
 const getArticleById = (id: number) => {
     return ArticleRepository.findOne({
-        where: { id }
+        where: { id },
+        relations: ['author']
     })
 }
 

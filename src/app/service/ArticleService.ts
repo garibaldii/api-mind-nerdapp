@@ -69,8 +69,13 @@ export const deleteArticleService = async (articleId: number) => {
   return ArticleRepository.deleteArticle(articleId);
 };
 
+export const getArticleByIdService = async (id: number) => {
+  return await ArticleRepository.getArticleById(id)
+}
+
+
 const compactImage = async (image: Buffer) => {
-return await sharp(image)
+  return await sharp(image)
     .resize({ width: 500 }) // redimensiona largura para 800px, mantendo proporção
     .jpeg({ quality: 70 }) // converte pra jpeg com qualidade 70% (compactação)
     .toBuffer();
