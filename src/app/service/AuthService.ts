@@ -15,6 +15,8 @@ export const login = async (email: string, password: string) => {
         )
     }
 
+    console.log(user.id)
+
     const matchesPassword = await bcrypt.compare(password, user.password)
 
     if (!matchesPassword) {
@@ -38,7 +40,7 @@ export const login = async (email: string, password: string) => {
 
 }
 
-export const signUp = async (name: string, email: string, password: string) => {
+export const signUp = async (email: string, password: string) => {
 
     if (await UserRepository.getUserByEmail(email)) {
         throw new HttpError(
@@ -47,7 +49,7 @@ export const signUp = async (name: string, email: string, password: string) => {
         )
     }
 
-    if (!name || !email || !password) {
+    if ( !email || !password) {
         throw new HttpError(
             `Todos os campos são obrigatórios`,
             400
@@ -59,7 +61,8 @@ export const signUp = async (name: string, email: string, password: string) => {
 
     console.log(hash)
 
-    const user = new User(name, email, hash)
+    const user = new User(email, hash)
     return await UserRepository.postUser(user)
 }
 
+ 
