@@ -6,8 +6,8 @@ class User {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column('varchar', { length: 100, nullable: false })
-    name: string;
+    @Column('varchar', { length: 50, nullable: true })
+    name?: string;
 
     @Column('varchar', { length: 100, nullable: false })
     email: string;
@@ -18,11 +18,11 @@ class User {
     @OneToMany(() => Article, (article) => article.author)
     articles?: Article[];
 
-    constructor(name: string, email: string, password: string, articles?: Article[]) {
-        this.name = name;
+    constructor( email: string, password: string, articles?: Article[], name?: string,) {
         this.email = email;
         this.password = password;
         this.articles = articles;
+        this.name = name
     }
 }
 
