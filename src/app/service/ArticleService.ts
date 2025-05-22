@@ -41,23 +41,25 @@ export const updateArticleService = async (articleId: number, data: any) => {
     throw new HttpError(`Este Artigo não existe`, 404);
   }
 
-  const { title, content, authorId, image } = data;
-  const author = await UserRepository.getUserById(authorId);
-
-  if (!author) {
-    throw new HttpError(`O autor referente a este artigo não existe`, 404);
-  }
-
   const updatedData: Partial<Article> = {
-    title,
-    content,
-    author,
-    image,
-    editDate: new Date(), //pegando o momento em que o objeto foi atualizado e atribuindo a editDate
+    editDate: new Date(),
   };
+
+  if (data.title !== undefined) updatedData.title = data.title;
+  if (data.content !== undefined) updatedData.content = data.content;
+  if (data.image !== undefined) updatedData.image = data.image;
+
+  if (data.authorId !== undefined) {
+    const author = await UserRepository.getUserById(data.authorId);
+    if (!author) {
+      throw new HttpError(`O autor referente a este artigo não existe`, 404);
+    }
+    updatedData.author = author;
+  }
 
   return ArticleRepository.updateArticle(article, updatedData);
 };
+
 
 export const deleteArticleService = async (articleId: number) => {
   const article = await ArticleRepository.getArticleById(articleId);
