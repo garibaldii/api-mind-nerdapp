@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import UserRepository from '../repositories/UserRepository';
 import { login, signUp } from '../service/AuthService';
-import { getUserByIdService, putUser } from '../service/UserService';
+import { getUserByIdService, likeArticleService, putUser } from '../service/UserService';
 import { authToken } from '../../middleware/Auth';
 import { upload } from '../../middleware/upload';
 
@@ -40,13 +40,13 @@ userRouter.post("/login", async (req, res, next) => {
     }
 })
 
-userRouter.put("/:id", upload.single("photo"),async (req, res, next) => {
+userRouter.put("/:id", upload.single("photo"), async (req, res, next) => {
     try {
         const id = Number(req.params.id)
         const { name } = req.body
         const photo = req.file?.buffer;
 
-        const data = {name, photo}
+        const data = { name, photo }
 
         const user = await putUser(id, data)
 
@@ -68,5 +68,31 @@ userRouter.get("/:id", async (req, res, next) => {
         next(error)
     }
 })
+
+
+
+userRouter.post("/:userId/like/:articleId", async (req, res, next) => {
+    try {
+        const userId = Number(req.params.userId)
+        const articleId = Number(req.params.articleId)
+
+        const response = await likeArticleService(userId, articleId)
+        res.status(200).send(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+// userRouter.put("/unlike/:id", async (req, res, next) => {
+//   try {
+//     const id = Number(req.params.id)
+//     const response = await unlikeuserService(id)
+
+//     res.status(200).send(response)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 export default userRouter;
