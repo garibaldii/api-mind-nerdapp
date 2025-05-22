@@ -20,7 +20,7 @@ const updateArticle = async (article: Article, newData: Partial<Article>): Promi
     let updatedArticle = ArticleRepository.merge(article, newData);
 
     // Salva o artigo atualizado
-     updatedArticle = await ArticleRepository.save(article);
+    updatedArticle = await ArticleRepository.save(article);
 
     return updatedArticle;
 }
@@ -34,4 +34,12 @@ const getArticleById = (id: number) => {
     })
 }
 
-export default { getArticles, postArticle, updateArticle, deleteArticle, getArticleById }
+const incrementLike = (id: number) => {
+    return ArticleRepository.increment({ id }, "likes", 1)
+}
+
+const decrementLike = (id: number) => {
+    return ArticleRepository.decrement({ id }, "likes", 1)
+}
+
+export default { getArticles, postArticle, updateArticle, deleteArticle, getArticleById, incrementLike, decrementLike }

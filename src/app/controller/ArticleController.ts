@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import {
-    deleteArticleService,
+  deleteArticleService,
   getArticleByIdService,
   getArticlesService,
   saveArticleService,
@@ -16,7 +16,7 @@ const articleRouter = Router();
 articleRouter.get("/", async (req, res, next) => {
   try {
     const articles = await getArticlesService();
-    res.status(200).send( articles );
+    res.status(200).send(articles);
   } catch (error) {
     next(error);
   }
@@ -29,41 +29,42 @@ articleRouter.post("/", authToken, upload.single("image"), async (req, res, next
     const image = req.file?.buffer
 
     const article = await saveArticleService(title, content, Number(authorId), image);
-    res.status(201).send( article );
+    res.status(201).send(article);
   } catch (error) {
     next(error);
   }
 });
 
 //UPDATE
-articleRouter.put("/:id", authToken, upload.single("image"),async (req, res, next) => {
+articleRouter.put("/:id", authToken, upload.single("image"), async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const { title, content, authorId } = req.body;
     const image = req.file?.buffer;
 
-    const data = {title, content, authorId, image}
+    const data = { title, content, authorId, image }
 
     const article = await updateArticleService(id, data);
 
-    res.status(200).send( article );
+    res.status(200).send(article);
   } catch (error) {
     next(error);
   }
 });
 
 //DELETE
-articleRouter.delete("/:id", authToken,async (req, res, next) => {
-    try {
-        const id = Number(req.params.id)
-        const response = await deleteArticleService(id)
+articleRouter.delete("/:id", authToken, async (req, res, next) => {
+  try {
+    const id = Number(req.params.id)
+    const response = await deleteArticleService(id)
 
-        res.status(200).send({message: `Artigo excluído com sucesso`, response})
-    } catch (error) {
-        next(error)
-    }
+    res.status(200).send({ message: `Artigo excluído com sucesso`, response })
+  } catch (error) {
+    next(error)
+  }
 })
 
+//GET BY ID
 articleRouter.get("/:id", async (req, res, next) => {
   try {
     const id = Number(req.params.id)
@@ -74,5 +75,6 @@ articleRouter.get("/:id", async (req, res, next) => {
     next(error)
   }
 })
+
 
 export default articleRouter;

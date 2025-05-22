@@ -34,8 +34,25 @@ const getUserByEmail = async (email: string): Promise<User> => {
 const getUserById = async (id: number): Promise<User> => {
     return userRepository.findOne({
         where: { id },
-        relations: ["articles"]
+        relations: ["articles", "likedArticles"]
     })
 }
 
-export default { getUsers, postUser, putUser, getUserByEmail, getUserById };
+const likeArticle = async (userId: number, articleId: number): Promise<void> => {
+  await userRepository
+    .createQueryBuilder()
+    .relation(User, "likedArticles")
+    .of(userId)
+    .add(articleId);
+};
+
+const unlikeArticle = async (userId: number, articleId: number): Promise<void> => {
+  await userRepository
+    .createQueryBuilder()
+    .relation(User, "likedArticles")
+    .of(userId)
+    .remove(articleId);
+};
+
+
+export default { getUsers, postUser, putUser, getUserByEmail, getUserById, likeArticle, unlikeArticle};

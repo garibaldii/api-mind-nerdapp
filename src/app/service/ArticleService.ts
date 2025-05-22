@@ -60,7 +60,6 @@ export const updateArticleService = async (articleId: number, data: any) => {
   return ArticleRepository.updateArticle(article, updatedData);
 };
 
-
 export const deleteArticleService = async (articleId: number) => {
   const article = await ArticleRepository.getArticleById(articleId);
 
@@ -74,7 +73,6 @@ export const deleteArticleService = async (articleId: number) => {
 export const getArticleByIdService = async (id: number) => {
   return await ArticleRepository.getArticleById(id)
 }
-
 
 const compactImage = async (image: Buffer) => {
   return await sharp(image)
