@@ -12,17 +12,21 @@ class User {
     @Column('varchar', { length: 100, nullable: false })
     email: string;
 
-    @Column('varchar', { length: 100, nullable: false })
+    @Column('varchar', { length: 100, nullable: false,})
     password: string;
 
     @OneToMany(() => Article, (article) => article.author)
     articles?: Article[];
 
-    constructor( email: string, password: string, articles?: Article[], name?: string,) {
+    @Column({ type: 'longblob', nullable: true })
+    photo?: Buffer
+
+    constructor(email: string, password: string, articles?: Article[], name?: string, photo?: Buffer) {
         this.email = email;
         this.password = password;
         this.articles = articles;
         this.name = name
+        if (photo) this.photo = photo
     }
 }
 
