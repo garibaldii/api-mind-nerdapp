@@ -3,10 +3,11 @@ import UserRepository from '../repositories/UserRepository';
 import { login, signUp } from '../service/AuthService';
 import { getUserByIdService, putUser } from '../service/UserService';
 import { authToken } from '../../middleware/Auth';
+import { upload } from '../../middleware/upload';
 
 const userRouter = Router();
 
-userRouter.get("/", authToken,async (req: Request, res: Response) => {
+userRouter.get("/", authToken, async (req: Request, res: Response) => {
     try {
         const users = await UserRepository.getUsers();
         res.status(200).json(users)
@@ -39,10 +40,13 @@ userRouter.post("/login", async (req, res, next) => {
     }
 })
 
-userRouter.put("/:id", async (req, res, next) => {
+userRouter.put("/:id", upload.single("photo"),async (req, res, next) => {
     try {
         const id = Number(req.params.id)
-        const data = req.body
+        const { name } = req.body
+        const photo = req.file?.buffer;
+
+        const data = {name, photo}
 
         const user = await putUser(id, data)
 
@@ -56,7 +60,7 @@ userRouter.put("/:id", async (req, res, next) => {
 userRouter.get("/:id", async (req, res, next) => {
     try {
         const id = Number(req.params.id)
-        
+
         const user = await getUserByIdService(id)
 
         res.status(200).send(user)
