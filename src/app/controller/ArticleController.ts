@@ -77,31 +77,4 @@ articleRouter.get("/:id", async (req, res, next) => {
 })
 
 
-
-
-//LIKES INTERAÇÃO
-
-//LIKE
-// articleRouter.post("/like/:id", async (req, res, next) => {
-//   try {
-//     const id = Number(req.params.id)
-
-//     const response = await likeArticleService(id)
-//     res.status(200).send(response)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-
-// articleRouter.put("/unlike/:id", async (req, res, next) => {
-//   try {
-//     const id = Number(req.params.id)
-//     const response = await unlikeArticleService(id)
-
-//     res.status(200).send(response)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 export default articleRouter;
