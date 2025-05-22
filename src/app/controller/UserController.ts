@@ -12,7 +12,7 @@ import { upload } from "../../middleware/upload";
 
 const userRouter = Router();
 
-userRouter.get("/",  async (req: Request, res: Response) => {
+userRouter.get("/", authToken, async (req: Request, res: Response) => {
   try {
     const users = await UserRepository.getUsers();
     res.status(200).json(users);
@@ -87,12 +87,11 @@ userRouter.delete("/:userId/unlike/:articleId", async (req, res, next) => {
     const userId = Number(req.params.userId);
     const articleId = Number(req.params.articleId);
 
-    const response = await unlikeArticleService(userId, articleId)
-    res.status(200).send(response)
+    const response = await unlikeArticleService(userId, articleId);
+    res.status(200).send(response);
   } catch (error) {
     next(error);
   }
 });
-
 
 export default userRouter;
