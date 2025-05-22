@@ -25,6 +25,9 @@
         @Column({ type: 'longblob', nullable: true })
         image?: Buffer
 
+        @Column({type: 'numeric', nullable: true})
+        likes?: number
+
         constructor(
             title: string,
             content: string,
@@ -38,6 +41,7 @@
             this.releaseDate = new Date()
             if (editDate) this.editDate = editDate
             if (image) this.image = image
+            this.likes = 0
         }
     }
 

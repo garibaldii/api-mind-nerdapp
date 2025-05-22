@@ -60,7 +60,6 @@ export const updateArticleService = async (articleId: number, data: any) => {
   return ArticleRepository.updateArticle(article, updatedData);
 };
 
-
 export const deleteArticleService = async (articleId: number) => {
   const article = await ArticleRepository.getArticleById(articleId);
 
@@ -75,6 +74,21 @@ export const getArticleByIdService = async (id: number) => {
   return await ArticleRepository.getArticleById(id)
 }
 
+// export const likeArticleService = async (id: number) => {
+//   const article = await ArticleRepository.getArticleById(id)
+
+//   if (!article) throw new HttpError("Este Artigo não existe", 404)
+
+//   return ArticleRepository.likeArticle(id)
+// }
+
+export const unlikeArticleService = async (id: number) => {
+  const article = await ArticleRepository.getArticleById(id)
+
+  if (!article) throw new HttpError("Este Artigo não existe", 404)
+
+  return ArticleRepository.unlikeArticle(id)
+}
 
 const compactImage = async (image: Buffer) => {
   return await sharp(image)
