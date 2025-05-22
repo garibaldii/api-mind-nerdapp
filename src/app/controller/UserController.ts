@@ -2,10 +2,11 @@ import { Request, Response, Router } from 'express';
 import UserRepository from '../repositories/UserRepository';
 import { login, signUp } from '../service/AuthService';
 import { getUserByIdService, putUser } from '../service/UserService';
+import { authToken } from '../../middleware/Auth';
 
 const userRouter = Router();
 
-userRouter.get("/", async (req: Request, res: Response) => {
+userRouter.get("/", authToken,async (req: Request, res: Response) => {
     try {
         const users = await UserRepository.getUsers();
         res.status(200).json(users)

@@ -8,6 +8,7 @@ import {
 } from "../service/ArticleService";
 
 import { upload } from "../../middleware/upload";
+import { authToken } from "../../middleware/Auth";
 
 const articleRouter = Router();
 
@@ -22,7 +23,7 @@ articleRouter.get("/", async (req, res, next) => {
 });
 
 //CREATE
-articleRouter.post("/", upload.single("image"), async (req, res, next) => {
+articleRouter.post("/", authToken, upload.single("image"), async (req, res, next) => {
   try {
     const { title, content, authorId } = req.body;
     const image = req.file?.buffer
@@ -35,7 +36,7 @@ articleRouter.post("/", upload.single("image"), async (req, res, next) => {
 });
 
 //UPDATE
-articleRouter.put("/:id", upload.single("image"),async (req, res, next) => {
+articleRouter.put("/:id", authToken, upload.single("image"),async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const { title, content, authorId } = req.body;
@@ -52,7 +53,7 @@ articleRouter.put("/:id", upload.single("image"),async (req, res, next) => {
 });
 
 //DELETE
-articleRouter.delete("/:id", async (req, res, next) => {
+articleRouter.delete("/:id", authToken,async (req, res, next) => {
     try {
         const id = Number(req.params.id)
         const response = await deleteArticleService(id)
