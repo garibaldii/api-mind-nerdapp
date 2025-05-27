@@ -38,8 +38,8 @@ const incrementLike = (id: number) => {
     return ArticleRepository.increment({ id }, "likes", 1)
 }
 
-const unlikeArticle = (id: number) => {
+const decrementLike = (id: number) => {
     return ArticleRepository.decrement({ id }, "likes", 1)
 }
 
-export default { getArticles, postArticle, updateArticle, deleteArticle, getArticleById, incrementLike, unlikeArticle }
+export default { getArticles, postArticle, updateArticle, deleteArticle, getArticleById, incrementLike, decrementLike }

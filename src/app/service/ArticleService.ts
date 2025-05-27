@@ -74,22 +74,6 @@ export const getArticleByIdService = async (id: number) => {
   return await ArticleRepository.getArticleById(id)
 }
 
-// export const likeArticleService = async (id: number) => {
-//   const article = await ArticleRepository.getArticleById(id)
-
-//   if (!article) throw new HttpError("Este Artigo não existe", 404)
-
-//   return ArticleRepository.likeArticle(id)
-// }
-
-export const unlikeArticleService = async (id: number) => {
-  const article = await ArticleRepository.getArticleById(id)
-
-  if (!article) throw new HttpError("Este Artigo não existe", 404)
-
-  return ArticleRepository.unlikeArticle(id)
-}
-
 const compactImage = async (image: Buffer) => {
   return await sharp(image)
     .resize({ width: 500 }) // redimensiona largura para 800px, mantendo proporção
